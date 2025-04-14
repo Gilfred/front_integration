@@ -1,0 +1,406 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #f9f9f9;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 0 24px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar .logo {
+    display: flex;
+    gap: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-right: 2rem;
+    margin-top: 0.75rem;
+}
+
+.summary,
+.first_nomber{
+    font-family: 'Arial Black',sans-serif;
+}
+
+.income{
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    color: #7a7a7a;
+    font-size: 20px;
+    font-weight: 400px;
+    filter: blur(0.3px);
+}
+
+.nav-menu,
+.section2>div>ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-item {
+    position: relative;
+    margin-right: 1.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+/* Flèche sous-menu */
+.nav-item.dropdown .nav-link::after {
+    content: '▾';
+    font-size: 0.6em;
+    margin-left: 4px;
+    display: inline-block;
+}
+
+/* Masquer la flèche pour les items sans sous‑menu */
+.nav-item:not(.dropdown) .nav-link::after {
+    content: none;
+}
+
+/* Sous‑menu caché */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    list-style: none;
+    min-width: 160px;
+    margin-top: 4px;
+    z-index: 10;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a:hover {
+    background: #f5f5f5;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.banner1,
+.section1,
+.income,
+table {
+    padding-top: 5px;
+    margin: 0 20px;
+}
+
+.banner1 {
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.banner1 > .left {
+    display: flex;
+    gap: 20px;
+}
+
+.banner1 .summary {
+    margin-top: 0.7rem;
+    padding-top: 0.45rem;
+}
+
+.banner1 #time_input,
+.paginate {
+    border-radius: 1.5rem;
+    border: 10px solid gainsboro;
+    width: 70%;
+    padding: 0.5rem 1rem;
+    margin-left: 0.3rem;
+}
+
+.section1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.section1 > .left {
+    padding-right: 20px;
+    margin-right: 10px;
+}
+
+#selection_option {
+    border: 0.01px solid white;
+    border-radius: 1rem;
+}
+
+.section1 .left > div {
+    display: flex;
+    float: right;
+}
+
+.pourcentage_first_nomber {
+    margin: 2.75rem 0 8rem 3rem;
+}
+
+.first_nomber {
+    font-size: 8rem;
+    color: #333;
+}
+
+.fleche_nomber {
+    transform: rotate(145deg);
+}
+
+button {
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transform: rotate(90deg);
+}
+
+.montant {
+    display: flex;
+    gap: 4.75rem;
+    font-size: 32px;
+    font-weight: bold;
+    padding-top: 25px;
+}
+
+.qte_fleche {
+    display: inline-flex;
+    align-items: center;
+    color: white;
+    border-radius: 20px;
+    border: 1px solid white;
+    padding: 5px 10px;
+    font-size: 14px;
+    float: right;
+}
+
+.fleche {
+    display: inline-block;
+    transform: rotate(+45deg);
+    font-weight: bold;
+}
+
+.section1 > .right > .option_text {
+    display: flex;
+    gap: 65%;
+}
+
+.section1 > .right {
+    width: 300px;
+    padding: 20px;
+    color: white;
+    border-radius: 20px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    background-color: pink;
+}
+
+/*Section 2, filtrage, recherche*/
+.section2 {
+    margin: 30px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filtrage,
+.recherche {
+    border: 1px solid #ddd;
+    border-radius: 1.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.recherche {
+    position: relative;
+    width: 250px;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.bordure_filtre,
+.recherche_input,
+.pourcentage_first_nomber {
+    border-radius: 1.5rem;
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: fit-content;
+}
+
+.bordure_filtre img {
+    height: 20px;
+}
+
+.les_filtres {
+    width: 30%;
+    height: auto;
+}
+
+table {
+    border-radius: 1rem;
+    border: none;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    /* padding: 5px 55px; */
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    margin-top: 0.3rem;
+}
+
+table .data_checbox {
+    border-radius: 1.5rem;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 15px;
+    gap: 8px;
+    font-weight: 200;
+    color: white;
+}
+
+tbody .position_profile {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.position_profile > .right {
+    padding: 10px;
+}
+
+tbody .profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/*MEDIA QUERIES*/
+/* Pour écrans moyens (tablettes) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0 12px;
+  }
+  .navbar .logo {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .banner1, .section1, .income {
+    margin: 0 10px;
+  }
+  .banner1 {
+    flex-direction: column;
+    align-items: center;
+  }
+  .section1 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .section1 > .right {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  .montant {
+    gap: 2rem;
+    font-size: 24px;
+  }
+  .filtrage,
+  .recherche,
+  .bordure_filtre,
+  .recherche_input,
+  .pourcentage_first_nomber {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+  table th, table td {
+    padding: 8px 10px;
+  }
+}
+
+/* Pour petits écrans (mobiles) */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0 8px;
+  }
+  .nav-menu {
+    flex-direction: column;
+    align-items: center;
+  }
+  .banner1,
+  .section1,
+  .income {
+    margin: 0 5px;
+  }
+  .section1 > .right {
+    width: 100%;
+    padding: 10px;
+  }
+  .montant {
+    gap: 1rem;
+    font-size: 20px;
+  }
+  .filtrage,
+  .recherche,
+  .bordure_filtre,
+  .recherche_input,
+  .pourcentage_first_nomber {
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+  table th, table td {
+    padding: 6px 5px;
+    font-size: 12px;
+  }
+}
