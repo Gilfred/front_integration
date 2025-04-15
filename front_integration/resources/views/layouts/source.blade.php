@@ -8,16 +8,16 @@
     <title>@yield('title','Gestionnaire')</title>
 </head>
 <body>
-    <header>
+    {{-- <header>
         @include('partials.header')
-    </header>
+    </header> --}}
 
     <main>
         @yield('content')
     </main>
 
-    <footer>
+    {{-- <footer>
         @include('partials.footer')
-    </footer>
+    </footer> --}}
 </body>
 </html>
