@@ -1,3 +1,4 @@
+
 <nav class="navbar">
     <div class="logo">
         <div>
@@ -22,4 +23,3 @@
         <li class="nav-item"><a href="#" class="nav-link">Activity</a></li>
     </ul>
 </nav>
-

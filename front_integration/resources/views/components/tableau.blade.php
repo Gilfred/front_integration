@@ -2,7 +2,7 @@
 
 @section('title',"affichage des informations ordonnées")
 
-@section()
+@section('components.tableau')
     <table>
         <thead>
         <tr>
