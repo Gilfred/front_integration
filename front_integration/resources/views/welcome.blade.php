@@ -1,4 +1,4 @@
-@extends('layouts.source')
+@extends('source')
 
 @section('title','Notre appli de gestion')
 
@@ -10,5 +10,5 @@
     @include('components.section2')
 
     @include('components.tableau')
-    
+
 @endsection
