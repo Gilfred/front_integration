@@ -2,7 +2,7 @@
 <nav class="navbar">
     <div class="logo">
         <div>
-        <img src="logo_wave.png" class="image_logo" alt="">
+        <img src="{{asset('images/logo_wave.png')}}" class="image_logo" alt="">
         </div>
         <div>
         Wave

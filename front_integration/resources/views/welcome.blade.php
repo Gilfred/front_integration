@@ -10,5 +10,5 @@
     @include('components.section2')
 
     @include('components.tableau')
-        
+    
 @endsection
