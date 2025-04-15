@@ -1,4 +1,4 @@
-@extends('source')
+@extends('layouts.source')
 
 @section('title','Notre appli de gestion')
 
