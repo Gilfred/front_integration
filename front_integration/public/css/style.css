@@ -27,6 +27,12 @@ body {
     margin-top: 0.75rem;
 }
 
+
+.laravel_icone path{
+    stroke: blue;
+    stroke-width: 2px;
+}
+
 .summary,
 .first_nomber{
     font-family: 'Arial Black',sans-serif;
