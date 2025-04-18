@@ -14,4 +14,9 @@
             </div>
         </div>
     </div>
+    @include('components.banner')
+    @include('components.section1')
+
+    {{-- le lien sera de type button --}}
+    <a href="{{route('envoie.argent')}}" class="button_d_envoie">Envoyer de l'argent a un uilisateur</a>
 </x-app-layout>

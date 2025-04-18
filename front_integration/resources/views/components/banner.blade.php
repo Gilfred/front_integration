@@ -25,7 +25,7 @@
             <i class="fa-solid fa-calendar-days"></i>
             Time:
         </label>
-        <input type="date" placeholder="date" id="time_input">
+        <input type="date" {{date('d-m-y H:i')}} id="time_input" readonly>
     </div>
 </div>
 <p class="income">
