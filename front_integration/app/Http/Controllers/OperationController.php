@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Operation;
 use Illuminate\Http\Request;
 
 class OperationController extends Controller
@@ -13,8 +12,6 @@ class OperationController extends Controller
     public function index()
     {
         //
-        $data_operation=Operation::all();
-        return view('les_formulaires.form_envoie',compact('data_operation'));
     }
 
     /**

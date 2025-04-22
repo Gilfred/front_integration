@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RechargecarteController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,7 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/formulaire/d_envoie',[TransactionController::class,'index'])->middleware(['auth','verified'])->name('envoie.argent');
+Route::get('/recharge_carte',[TransactionController::class,'index'])->middleware(['auth','verified'])->name('recharge.carte');
+Route::post('/recharge/cartes',[RechargecarteController::class,'store'])->middleware(['auth','verified'])->name('recharger.carte.perso');
+Route::get('/transfere_argent',[RechargecarteController::class,'index'])->middleware(['auth','verified'])->name('transfere.argent');
+Route::post('/transfere_argents',[TransactionController::class,'store'])->middleware(['auth','verified'])->name('envoie.argent.a.un.user');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

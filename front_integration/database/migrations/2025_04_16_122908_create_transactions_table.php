@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('recepteur_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('expediteur_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('operation_id')->constrained('operations')->cascadeOnDelete();
             $table->string('description')->nullable();
             $table->decimal('montant_transfere',10,2);
             $table->enum('status',['pending','validated','failed'])->default('pending');

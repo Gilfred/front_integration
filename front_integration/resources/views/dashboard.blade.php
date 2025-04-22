@@ -18,5 +18,5 @@
     @include('components.section1')
 
     {{-- le lien sera de type button --}}
-    <a href="{{route('envoie.argent')}}" class="button_d_envoie">Envoyer de l'argent a un uilisateur</a>
+    <a href="{{route('recharge.carte')}}" class="button_d_envoie">Recharger mon compte</a>
 </x-app-layout>
