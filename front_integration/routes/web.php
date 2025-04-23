@@ -13,6 +13,7 @@ Route::get('/recharge_carte',[TransactionController::class,'index'])->middleware
 Route::post('/recharge/cartes',[RechargecarteController::class,'store'])->middleware(['auth','verified'])->name('recharger.carte.perso');
 Route::get('/transfere_argent',[RechargecarteController::class,'index'])->middleware(['auth','verified'])->name('transfere.argent');
 Route::post('/transfere_argents',[TransactionController::class,'store'])->middleware(['auth','verified'])->name('envoie.argent.a.un.user');
+Route::get('/info_perso',[TransactionController::class,'historic'])->middleware(['auth','verified'])->name('fiche_information');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

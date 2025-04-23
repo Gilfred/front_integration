@@ -27,13 +27,9 @@ class TransactionController extends Controller
         //
     }
 
-    //methode permettant de gérer la incrementation et la decrementation lors de l'envoie d'aargent a un abonné
-
-    //methode d'ajout d'argent lorsque l'argent est envoye au destinataire
-    public function ajout_somme(){
-        
+    public function historic(){
+        return view('historic');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -102,7 +98,7 @@ class TransactionController extends Controller
 
         DB::commit();
 
-        return redirect()->back()->with('success', 'Transfert effectué avec succès.');
+        return redirect()->route(' ');
 
     } catch (\Exception $e) {
         // dd($e);

@@ -1,6 +1,9 @@
 @extends('layouts.source')
 
+@include('layouts.navigation')
 @section('content')
+
+{{-- @include('layouts.navigation') --}}
 <form action="{{ route('envoie.argent.a.un.user') }}" method="POST">
     @csrf
 
