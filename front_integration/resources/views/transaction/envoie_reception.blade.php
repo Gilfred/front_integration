@@ -22,9 +22,12 @@
         <select name="recepteur_id" id="recepteur_id">
             <option value="">Sélectionner un destinataire</option>
             @foreach ($utilisateurs as $utilisateur)
-                <option value="{{ $utilisateur->id }}">
-                    {{ $utilisateur->name }} {{ $utilisateur->prenom }}
-                </option>
+                @if ($utilisateur->id !== auth()->user()->id)
+                    <option value="{{ $utilisateur->id }}">
+                        {{ $utilisateur->name }} {{ $utilisateur->prenom }}
+                    </option>
+                @endif
+                
             @endforeach
         </select>
     </div>
@@ -41,7 +44,7 @@
     </div>
 
     <div>
-        <label for="description">Description (facultatif)</label>
+        <label for="description">Description</label>
         <input type="text" name="description" id="description">
     </div>
 

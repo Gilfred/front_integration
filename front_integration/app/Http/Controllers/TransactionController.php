@@ -55,7 +55,6 @@ class TransactionController extends Controller
 
     try {
         // Récupération des cartes avec verrouillage
-        // dd();
         // dd('entree dans le try');
         $carteExpediteur = Electronic_card::lockForUpdate()
             ->where('users_id', $validated_data['expediteur_id'])
