@@ -19,4 +19,6 @@
 
     {{-- le lien sera de type button --}}
     <a href="{{route('recharge.carte')}}" class="button_d_envoie">Recharger mon compte</a>
+
+    <a href="{{route('transfere.argent')}}">Envoyer de l'argent à ami</a>
 </x-app-layout>

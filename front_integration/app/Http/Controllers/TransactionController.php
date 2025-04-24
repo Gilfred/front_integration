@@ -59,27 +59,30 @@ class TransactionController extends Controller
             'description' => ['nullable', 'min:1'],
             'montant_transfere' => ['required', 'numeric', 'min:0.01'],
         ];
+        
         $validated_data = $request->validate($regle);
-
+        // dd();
         DB::beginTransaction();
 
         try {
+            // dd('entrer dans le try');
             // Récupérer l'expéditeur et le destinataire avec verrouillage optimiste
             $expediteur = User::lockForUpdate()->findOrFail($validated_data['expediteur_id']);
             $destinataire = User::lockForUpdate()->findOrFail($validated_data['recepteur_id']);
 
             // Vérifier si l'expéditeur a suffisamment de fonds
-            if ($expediteur->balance < $validated_data['montant_transfere']) {
+            if ($expediteur->balence < $validated_data['montant_transfere']) {
+                // dd();
                 DB::rollBack();
                 return redirect()->back()->withErrors(['message' => "Solde insuffisant pour l'expéditeur."]);
             }
 
             // Débiter le compte de l'expéditeur
-            $expediteur->balance -= $validated_data['montant_transfere'];
+            $expediteur->balence -= $validated_data['montant_transfere'];
             $expediteur->save();
 
             // Créditer le compte du destinataire
-            $destinataire->balance += $validated_data['montant_transfere'];
+            $destinataire->balence += $validated_data['montant_transfere'];
             $destinataire->save();
 
             $transaction = new Transaction();
@@ -93,13 +96,14 @@ class TransactionController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Transfert effectué avec succès.');
-
+            return redirect()->route('fiche_information');
         } catch (\Exception $e) {
+            // dd();
             DB::rollBack();
             Log::error('Erreur lors du transfert : ' . $e->getMessage());
             return redirect()->back()->withErrors(['message' => "Une erreur s'est produite lors du transfert. Veuillez réessayer."]);
         }
+        
     }
 
     /**
