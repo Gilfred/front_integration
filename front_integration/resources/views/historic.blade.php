@@ -6,10 +6,10 @@
 @section('content')
     @include('components.banner')
 
-    <p>
-        Mon solde actuel est:
-        {{$solde_courant}}
-    </p>
+    <div>
+        Mon solde actuel de votre compte est:
+        {{-- {{$solde_courant}} --}}
+    </div>
 
     @include('components.section1')
 

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'call_number',
+        'balence',
     ];
 
     public function envoyeur_argent(){
@@ -31,10 +32,6 @@ class User extends Authenticatable
 
     public function recepteur_argent(){
         return $this->hasMany(Transaction::class,'recepteur_id');
-    }
-
-    public function electronic_card(){
-        return $this->hasOne(Electronic_card::class,'users_id');
     }
 
     /**

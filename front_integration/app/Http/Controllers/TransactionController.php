@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Electronic_card;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 // use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
@@ -38,68 +39,49 @@ class TransactionController extends Controller
         //     $solde_actuel = $carte->montant;
         // }
 
-        $montant_entree_compte=Electronic_card::where('users_id',$utilisateur->id)->sum('montant');
+        // $montant_entree_compte=Electronic_card::where('users_id',$utilisateur->id)->sum('montant');
 
-        $montant_des_sortie = Transaction::where('expediteur_id', $utilisateur->id)->sum('montant_transfere');
+        // $montant_des_sortie = Transaction::where('expediteur_id', $utilisateur->id)->sum('montant_transfere');
 
-        $solde_courant = $montant_entree_compte - $montant_des_sortie;
+        // $solde_courant = $montant_entree_compte - $montant_des_sortie;
 
-        return view('historic', compact('solde_courant'));
+        return view('historic');
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request){
-        $rules = [
-            'description' => ['required', 'min:1'],
-            'montant_transfere' => ['required', 'numeric'],
-            'recepteur_id' => ['required', 'exists:users,id'],
+
+        $regle = [
             'expediteur_id' => ['required', 'exists:users,id'],
+            'recepteur_id' => ['required', 'exists:users,id', 'different:expediteur_id'],
             'operation_id' => ['required', 'exists:operations,id'],
+            'description' => ['nullable', 'min:1'],
+            'montant_transfere' => ['required', 'numeric', 'min:0.01'],
         ];
-
-        $validated_data = $request->validate($rules);
-
-        // dd($validated_data);
+        $validated_data = $request->validate($regle);
 
         DB::beginTransaction();
 
         try {
-            // Récupération des cartes avec verrouillage
-            // dd('entree dans le try');
-            $carteExpediteur = Electronic_card::lockForUpdate()
-                ->where('users_id', $validated_data['expediteur_id'])
-                ->first();
-                // dd('fait du carteexpediteur',$carteExpediteur);
-            $carteRecepteur = Electronic_card::lockForUpdate()
-                ->where('users_id', $validated_data['recepteur_id'])
-                ->first();
-            // dd('pour le recepteur',$carteRecepteur)
-            // Vérification de l'existence des cartes
-            if (!$carteExpediteur || !$carteRecepteur) {
+            // Récupérer l'expéditeur et le destinataire avec verrouillage optimiste
+            $expediteur = User::lockForUpdate()->findOrFail($validated_data['expediteur_id']);
+            $destinataire = User::lockForUpdate()->findOrFail($validated_data['recepteur_id']);
+
+            // Vérifier si l'expéditeur a suffisamment de fonds
+            if ($expediteur->balance < $validated_data['montant_transfere']) {
                 DB::rollBack();
-                return redirect()->back()->withErrors(['message' => "Carte électronique introuvable pour l'expéditeur ou le receveur."]);
+                return redirect()->back()->withErrors(['message' => "Solde insuffisant pour l'expéditeur."]);
             }
 
-            // Vérification du solde
-            if ($carteExpediteur->montant < $validated_data['montant_transfere']) {
-                DB::rollBack();
-                return redirect()->back()->withErrors(['message' => "Solde insuffisant dans le compte de l'expéditeur."]);
-            }
+            // Débiter le compte de l'expéditeur
+            $expediteur->balance -= $validated_data['montant_transfere'];
+            $expediteur->save();
 
-            // Débit expéditeur
-            $carteExpediteur->montant -= $validated_data['montant_transfere'];
-            // dd('avant sauvegarde expediteur', $carteExpediteur);
-            $carteExpediteur->save();
-            // dd('apres sauvegarde recepteur');
+            // Créditer le compte du destinataire
+            $destinataire->balance += $validated_data['montant_transfere'];
+            $destinataire->save();
 
-            // Crédit destinataire
-            $carteRecepteur->montant += $validated_data['montant_transfere'];
-            // dd('Avant sauvegarde recepteur', $carteRecepteur->toArray());
-            $carteRecepteur->save();
-            // dd('apres sauvegarde recepteur');
-
-            // Enregistrement de la transaction
             $transaction = new Transaction();
             $transaction->recepteur_id = $validated_data['recepteur_id'];
             $transaction->expediteur_id = $validated_data['expediteur_id'];
@@ -107,19 +89,16 @@ class TransactionController extends Controller
             $transaction->description = $validated_data['description'];
             $transaction->montant_transfere = $validated_data['montant_transfere'];
             $transaction->status = 'validated';
-            // dd('avant sauvegarde transaction',$transaction);
             $transaction->save();
-            // dd('apres sauvegarde transaction');
 
             DB::commit();
 
-            return redirect()->route('fiche_information');
+            return redirect()->back()->with('success', 'Transfert effectué avec succès.');
 
         } catch (\Exception $e) {
-            // dd($e);
             DB::rollBack();
-            // Log::error('Erreur lors du transfert : ' . $e->getMessage());
-            return redirect()->back()->withErrors(['message' => "Une erreur s'est produite. Veuillez réessayer."]);
+            Log::error('Erreur lors du transfert : ' . $e->getMessage());
+            return redirect()->back()->withErrors(['message' => "Une erreur s'est produite lors du transfert. Veuillez réessayer."]);
         }
     }
 

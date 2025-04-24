@@ -37,17 +37,17 @@ class RechargecarteController extends Controller
     public function store(Request $request)
     {
         //
-        $regle=[
-            'montant'=>['required','numeric','min:1',],
-        ];
-        $user_id=Auth::id();
-        $validated_data =$request->validate($regle);
+        // $regle=[
+        //     'montant'=>['required','numeric','min:1',],
+        // ];
+        // $user_id=Auth::id();
+        // $validated_data =$request->validate($regle);
 
-        $recharge_compte_perso=new Electronic_card();
-        $recharge_compte_perso->users_id=$user_id;
-        $recharge_compte_perso->montant=$request->input('montant');
-        $recharge_compte_perso->save();
-        return redirect()->route('transfere.argent');
+        // $recharge_compte_perso=new Electronic_card();
+        // $recharge_compte_perso->users_id=$user_id;
+        // $recharge_compte_perso->montant=$request->input('montant');
+        // $recharge_compte_perso->save();
+        // return redirect()->route('transfere.argent');
     }
 
     /**

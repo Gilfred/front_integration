@@ -23,6 +23,13 @@
             <x-input-error :messages="$errors->get('call_number')" class="mt-2" />
         </div>
 
+        {{-- balence/solde --}}
+        <div class="mt-4">
+            <x-input-label for="balence" :value="__('Première transaction')" />
+            <x-text-input id="balence" class="block mt-1 w-full" type="number" name="balence" :value="old('balence')" required autocomplete="balence" />
+            <x-input-error :messages="$errors->get('balence')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
