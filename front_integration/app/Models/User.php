@@ -25,6 +25,18 @@ class User extends Authenticatable
         'call_number',
     ];
 
+    public function envoyeur_argent(){
+        return $this->hasMany(Transaction::class,'expediteur_id');
+    }
+
+    public function recepteur_argent(){
+        return $this->hasMany(Transaction::class,'recepteur_id');
+    }
+
+    public function electronic_card(){
+        return $this->hasOne(Electronic_card::class,'users_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

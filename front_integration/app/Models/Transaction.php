@@ -18,4 +18,16 @@ class Transaction extends Model
         'montant_transfere',
         'status',
     ];
+
+    public function expediteur(){
+        return $this->belongsTo(User::class,'expediteur_id');
+    }
+
+    public function recepteur(){
+        return $this->belongsTo(User::class,'recepteur_id');
+    }
+
+    public function operation(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -14,4 +14,8 @@ class Electronic_card extends Model
         'users_id',
         'montant',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
