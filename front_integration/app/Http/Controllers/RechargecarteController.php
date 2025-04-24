@@ -47,7 +47,7 @@ class RechargecarteController extends Controller
             DB::beginTransaction();
             try {
                 $utilisateur->balence += $montantRecharge;
-                // $utilisateur->save();
+                $utilisateur->save();
                 DB::commit();
                 return redirect()->route('fiche_information');
 
