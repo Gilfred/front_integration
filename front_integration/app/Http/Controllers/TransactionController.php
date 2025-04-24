@@ -29,23 +29,12 @@ class TransactionController extends Controller
         //
     }
 
-    public function historic(User $utilisateur){
-        // Récupérer la carte électronique de l'utilisateur
-        // $carte = $utilisateur->users_id;
+    public function historic(){
 
-        // $solde_actuel = 0; // Initialiser à zéro par défaut
+        // $login_user=auth()->user();
+        $solde_courant=auth()->user();
 
-        // if ($carte) {
-        //     $solde_actuel = $carte->montant;
-        // }
-
-        // $montant_entree_compte=Electronic_card::where('users_id',$utilisateur->id)->sum('montant');
-
-        // $montant_des_sortie = Transaction::where('expediteur_id', $utilisateur->id)->sum('montant_transfere');
-
-        // $solde_courant = $montant_entree_compte - $montant_des_sortie;
-
-        return view('historic');
+        return view('historic',compact('solde_courant'));
     }
     /**
      * Store a newly created resource in storage.

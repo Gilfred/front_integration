@@ -26,13 +26,14 @@ class User extends Authenticatable
         'balence',
     ];
 
-    public function envoyeur_argent(){
-        return $this->hasMany(Transaction::class,'expediteur_id');
-    }
+    // public function expediteur(){
+    //     return $this->hasOne(Transaction::class,'expediteur_id');
+    // }
 
-    public function recepteur_argent(){
-        return $this->hasMany(Transaction::class,'recepteur_id');
-    }
+    // public function recepteur(){
+    //     return $this->hasOne(Transaction::class,'recepteur_id');
+    // }
+
 
     /**
      * The attributes that should be hidden for serialization.

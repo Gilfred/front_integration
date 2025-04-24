@@ -19,15 +19,7 @@ class Transaction extends Model
         'status',
     ];
 
-    public function expediteur(){
-        return $this->belongsTo(User::class,'expediteur_id');
-    }
-
-    public function recepteur(){
-        return $this->belongsTo(User::class,'recepteur_id');
-    }
-
-    public function operation(){
-        return $this->belongsTo(User::class);
-    }
+    // public function user(){
+    //     return $this->belongsTo(User::class);
+    // }
 }

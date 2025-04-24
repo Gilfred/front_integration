@@ -8,7 +8,7 @@
 
     <div>
         Mon solde actuel de votre compte est:
-        {{-- {{$solde_courant}} --}}
+        {{$solde_courant->balence}}
     </div>
 
     @include('components.section1')
