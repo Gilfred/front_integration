@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Operation;
 use App\Models\User;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RechargecarteController extends Controller
 {
@@ -32,10 +34,32 @@ class RechargecarteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function recharge_process(Request $request){
         //
+        $request->validate([
+            'montant' => ['required', 'numeric', 'min:0.01'],
+        ]);
+
+        $montantRecharge = $request->input('montant');
+        $utilisateur = Auth::user();
+
+        if ($utilisateur) {
+            DB::beginTransaction();
+            try {
+                $utilisateur->balence += $montantRecharge;
+                // $utilisateur->save();
+                DB::commit();
+                return redirect()->route('fiche_information');
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('recharge.form')->withErrors(['message' => 'Une erreur s\'est produite lors de la recharge. Veuillez réessayer.']);
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['message' => 'Vous devez être connecté pour recharger votre compte.']);
+        }
     }
+    
 
     /**
      * Display the specified resource.

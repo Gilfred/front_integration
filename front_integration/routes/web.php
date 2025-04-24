@@ -10,6 +10,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/recharge_carte',[TransactionController::class,'index'])->middleware(['auth','verified'])->name('recharge.carte');
+Route::post('/recharge_de_carte',[RechargecarteController::class,'recharge_process'])->middleware(['auth','verified'])->name('recharger.carte.perso');
 Route::get('/transfere_argent',[RechargecarteController::class,'index'])->middleware(['auth','verified'])->name('transfere.argent');
 Route::post('/transfere_argents',[TransactionController::class,'store'])->middleware(['auth','verified'])->name('envoie.argent.a.un.user');
 Route::get('/info_perso',[TransactionController::class,'historic'])->middleware(['auth','verified'])->name('fiche_information');
