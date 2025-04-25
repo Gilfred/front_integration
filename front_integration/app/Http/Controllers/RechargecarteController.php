@@ -53,7 +53,7 @@ class RechargecarteController extends Controller
 
             } catch (\Exception $e) {
                 DB::rollBack();
-                return redirect()->route('recharge.form')->withErrors(['message' => 'Une erreur s\'est produite lors de la recharge. Veuillez réessayer.']);
+                return redirect()->route('recharge.form')->withErrors(['message' => "Une erreur s'est produite lors de la recharge. Veuillez réessayer."]);
             }
         } else {
             return redirect()->route('login')->withErrors(['message' => 'Vous devez être connecté pour recharger votre compte.']);

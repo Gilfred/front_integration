@@ -23,18 +23,35 @@
         </div>
         <ul class="nav-menu">
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">Vue d’ensemble</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Vue d’ensemble</a></li>
                     <li><a href="#">Activités récentes</a></li>
                     <li><a href="#">Paramètres</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Statistics</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Wallet</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Tasks</a></li>
+            <li class="nav-item"><a href="{{route('transfere.argent')}}" class="nav-link">Envoyer de l'argent à ami</a></li>
+            <li class="nav-item"><a href="{{route('fiche_information')}}" class="nav-link">Wallet</a></li>
+            <li class="nav-item"><a href="{{route('recharge.carte')}}" class="nav-link">Recharger mon compte</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Activity</a></li>
         </ul>
+        <div>
+            <div class="px-4">
+                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            </div>
+            <x-responsive-nav-link :href="route('profile.edit')">
+                    {{ __('Profile') }}
+            </x-responsive-nav-link>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </x-responsive-nav-link>
+            </form>
+        </div>
     </nav>
     <div>
         <div class="">

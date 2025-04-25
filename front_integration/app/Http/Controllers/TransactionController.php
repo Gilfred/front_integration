@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -31,10 +32,17 @@ class TransactionController extends Controller
 
     public function historic(){
 
-        // $login_user=auth()->user();
         $solde_courant=auth()->user();
-
-        return view('historic',compact('solde_courant'));
+        if (Auth::check()) {
+            $utilisateurConnecte = Auth::user();
+            $sorties = Transaction::where('expediteur_id', $utilisateurConnecte->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+    
+            return view('historic', compact('solde_courant', 'sorties'));
+        } else {
+            return redirect()->route('login');
+        }
     }
     /**
      * Store a newly created resource in storage.

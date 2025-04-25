@@ -11,32 +11,35 @@
     </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                <form action="">
-                <input type="checkbox">
-                </form>
-            </td>
-            <td>
-                <div class="position_profile">
-                <div class="left">
-                    <img src="{{asset('images/logo 1.png')}}" class="profile" alt="#">
-                </div>
-                <div class="right">
-                    <h5>Benjamin Smilth</h5>
-                    <p>benjamin@gmail.com</p>
-                </div>
-                </div>
-            </td>
-            <td>#314455</td>
-            <td class="data_checbox" style="background-color: pink;">
-                <i class="fa-regular fa-circle-check"></i>
-                Done
-            </td>
-            <td>Graphic Designer</td>
-            <td>$1,000.34</td>
-        </tr>
-        <tr>
+        @foreach ($sorties as $transaction)
+            <tr>
+                <td>
+                    <form action="">
+                    <input type="checkbox">
+                    </form>
+                </td>
+                <td>
+                    <div class="position_profile">
+                    <div class="left">
+                        <img src="{{asset('images/logo 1.png')}}" class="profile" alt="#">
+                    </div>
+                    <div class="right">
+                        {{-- <h5>{{$transaction->recepteur_id->name}} {{$transaction->recepteur_id->prenom}}</h5> --}}
+                        {{-- <p>{{$transaction->recepteur_id->email}}</p> --}}
+                    </div>
+                    </div>
+                </td>
+                <td>#314455</td>
+                <td class="data_checbox" style="background-color: pink;">
+                    <i class="fa-regular fa-circle-check"></i>
+                    Done
+                </td>
+                <td>Graphic Designer</td>
+                <td>{{$transaction->montant_transfere}}</td>
+            </tr>
+        @endforeach
+        
+        {{-- <tr>
             <td>
                 <form action="">
                 <input type="checkbox">
@@ -110,7 +113,7 @@
             </td>
             <td>UI/UX designer</td>
             <td>$2,743.28</td>
-        </tr>
+        </tr> --}}
     </tbody>
 </table>
 

@@ -4,7 +4,8 @@
     <div>
     <div class="left">
     <div>
-        <div class="first_nomber">$15,459.50</div>
+        <h5>Solde</h5>
+        <div class="first_nomber">{{$solde_courant->balence}}</div>
         <div class="pourcentage_first_nomber"> <span class="fleche_nomber">↑</span> 2.2%</div>
     </div>
     </div>

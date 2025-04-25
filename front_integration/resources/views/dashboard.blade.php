@@ -15,10 +15,6 @@
         </div>
     </div>
     @include('components.banner')
-    @include('components.section1')
+    {{-- @include('components.section1') --}}
 
-    {{-- le lien sera de type button --}}
-    <a href="{{route('recharge.carte')}}" class="button_d_envoie">Recharger mon compte</a>
-
-    <a href="{{route('transfere.argent')}}">Envoyer de l'argent à ami</a>
 </x-app-layout>

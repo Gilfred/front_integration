@@ -1,71 +1,68 @@
 <?php
 
-namespace App\Mail;
+namespace App\Notifications;
 
-use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class transactionNotif extends Mailable
+class transactionNotif extends Notification implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
 
-    public $transaction;
-    public $recepteur;
-
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(Transaction $transaction, User $recepteur)
-    {
-        $this->transaction = $transaction;
-        $this->recepteur = $recepteur;
-    }
-
-    public function build(){
-        return $this->subject('Vous avez reçu de l\'argent !')
-            ->markdown('emails.argent_recu')
-            ->with([
-                'nomRecepteur' => $this->recepteur->name . ' ' . $this->recepteur->prenom,
-                'montantRecu' => $this->transaction->montant_transfere,
-                'nomExpediteur' => $this->transaction->expediteur->name . ' ' . $this->transaction->expediteur->prenom,
-                'description' => $this->transaction->description,
-                'dateHeure' => $this->transaction->created_at,
-            ]);
-    }   
+    protected $amount;
+    protected $recipientName;
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Transaction Notif',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
+     * Create a new notification instance.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @param float $amount
+     * @param string $recipientName
+     * @return void
      */
-    public function attachments(): array
+    public function __construct(float $amount, string $recipientName)
     {
-        return [];
+        $this->amount = $amount;
+        $this->recipientName = $recipientName;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param mixed $notifiable
+     * @return array<int, string>
+     */
+    public function via(object $notifiable): array
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail(object $notifiable): MailMessage
+    {
+        return (new MailMessage)
+                    ->subject("Transaction Réussie")
+                    ->line("Votre transaction de " . number_format($this->amount, 2) . "a été effectuée avec succès.")
+                    ->line("L'argent a été envoyé à : " . $this->recipientName)
+                    ->line("Merci d'utiliser notre service !");
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [
+            //
+        ];
     }
 }

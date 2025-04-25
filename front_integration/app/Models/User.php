@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use App\Notifications\transactionNotif;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -26,13 +29,34 @@ class User extends Authenticatable
         'balence',
     ];
 
-    // public function expediteur(){
-    //     return $this->hasOne(Transaction::class,'expediteur_id');
-    // }
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'expediteur_id');
+    }
+    public function sendMoney(User $recipient, float $amount): bool
+    {
+        if ($this->balence < $amount) {
+            throw new Exception("Solde insuffisant.");
+        }
 
-    // public function recepteur(){
-    //     return $this->hasOne(Transaction::class,'recepteur_id');
-    // }
+        DB::beginTransaction();
+
+        try {
+            $this->decrement('balence', $amount);
+            $recipient->increment('balence', $amount);
+
+            DB::commit();
+
+            // Envoyer une notification à l'utilisateur actuel (l'expéditeur)
+            $this->notify(new transactionNotif($amount, $recipient->name));
+
+            return true;
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception("Erreur lors de la transaction : " . $e->getMessage());
+        }
+    }
 
 
     /**

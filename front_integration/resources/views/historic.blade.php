@@ -1,15 +1,12 @@
 @extends('layouts.source')
 
-@include('layouts.navigation')
+{{-- @include('layouts.navigation') --}}
 @section('title','Notre appli de gestion')
 
 @section('content')
     @include('components.banner')
-
-    <div>
-        Mon solde actuel de votre compte est:
-        {{$solde_courant->balence}}
-    </div>
+    
+    {{-- le solde du compte qui est afficher est dans la vue components.section1 --}}
 
     @include('components.section1')
 
