@@ -29,7 +29,7 @@
                     </div>
                     </div>
                 </td>
-                <td>#314455</td>
+                <td>#{{$transaction->recepteur->id}}#</td>
                 <td class="data_checbox" style="background-color: pink;">
                     <i class="fa-regular fa-circle-check"></i>
                     Done
