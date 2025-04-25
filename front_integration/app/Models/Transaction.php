@@ -7,11 +7,12 @@ use App\Notifications\transactionNotif;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
     //
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'recepteur_id',
@@ -22,15 +23,23 @@ class Transaction extends Model
         'status',
     ];
 
-    public function expediteur()
-    {
-        return $this->belongsTo(User::class, 'expediteur_id');
-    }
+    public function recepteur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+{
+    return $this->belongsTo(User::class, 'recepteur_id');
+}
 
-    public function recepteur(){
-        return $this->belongsTo(User::class,"recepteur_id");
-    }
+    /**
+     * Obtient l'utilisateur qui est l'expéditeur de la transaction.
+     */
+    public function expediteur(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+{
+    return $this->belongsTo(User::class, 'expediteur_id');
+}
 
+public function operation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+{
+    return $this->belongsTo(Operation::class);
+}
     public function send(Request $request)
     {
         $request->validate([

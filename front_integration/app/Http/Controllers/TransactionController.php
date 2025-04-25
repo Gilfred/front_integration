@@ -32,14 +32,13 @@ class TransactionController extends Controller
 
     public function historic(){
 
-        $solde_courant=auth()->user();
+        $solde_courant= auth()->user();
         if (Auth::check()) {
             $utilisateurConnecte = Auth::user();
             $sorties = Transaction::where('expediteur_id', $utilisateurConnecte->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
-    
-            return view('historic', compact('solde_courant', 'sorties'));
+            return view('historic', compact('solde_courant','sorties'));
         } else {
             return redirect()->route('login');
         }

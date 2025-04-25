@@ -24,8 +24,8 @@
                         <img src="{{asset('images/logo 1.png')}}" class="profile" alt="#">
                     </div>
                     <div class="right">
-                        {{-- <h5>{{$transaction->recepteur_id->name}} {{$transaction->recepteur_id->prenom}}</h5> --}}
-                        {{-- <p>{{$transaction->recepteur_id->email}}</p> --}}
+                        <h5>{{$transaction->recepteur->name}} {{$transaction->recepteur->prenom}}</h5>
+                        <p>{{$transaction->recepteur->email}}</p>
                     </div>
                     </div>
                 </td>

@@ -33,6 +33,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class, 'expediteur_id');
     }
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'recepteur_id');
+    } 
+
     public function sendMoney(User $recipient, float $amount): bool
     {
         if ($this->balence < $amount) {
