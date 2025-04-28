@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Exception;
-use App\Notifications\transactionNotif;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,20 +45,5 @@ public function operation(): \Illuminate\Database\Eloquent\Relations\BelongsTo
             'amount' => ['required,numeric,min:0.01'],
         ]);
 
-        $sender = auth()->user();
-        $recipient = User::findOrFail($request->recipient_id);
-        $amount = $request->amount;
-
-        try {
-            $sender->sendMoney($recipient, $amount);
-
-            // Envoyer une notification à l'utilisateur actuel (l'expéditeur)
-            $sender->notify(new transactionNotif($amount, $recipient->name));
-
-            return redirect()->back()->with('success', "L'argent a été envoyé avec succès à " . $recipient->name . '.');
-
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-        }
     }
 }

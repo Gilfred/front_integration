@@ -16,5 +16,6 @@
     </div>
     @include('components.banner')
     {{-- @include('components.section1') --}}
+    <a href="{{route('fiche_information')}}">Voir mes Historiques</a>
 
 </x-app-layout>
