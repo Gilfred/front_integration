@@ -16,7 +16,7 @@
         <div>
         Deposit
         </div>
-        <button>...</button>
+        <button class="button_option">...</button>
     </div>
     <div class="montant">
         <div>

@@ -179,7 +179,7 @@ table {
     transform: rotate(145deg);
 }
 
-button {
+.button_option {
     background-color: white;
     border: none;
     border-radius: 50%;
