@@ -57,6 +57,6 @@
 
     <input type="text" name="status" hidden>
 
-    <button type="submit" style="all:initial">Envoyer l'argent</button>
+    <button type="submit" >Envoyer l'argent</button>
 </form>
 @endsection
