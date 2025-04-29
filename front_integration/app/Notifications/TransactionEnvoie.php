@@ -41,13 +41,15 @@ class TransactionEnvoie extends Notification
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable){
-        return (new MailMessage)
-                    ->subject('Confirmation d\envoie d\'argent!')
-                    ->greeting('Bonjour!'. $this->expediteur->name. $this->expediteur->prenom .'.')
-                    ->line('Vous avez envoyé à'. $this->recepteur->name. $this->recepteur->prenom. 'la somme de' . $this->transaction->montant_transfere)
-                    ->line('Description:'. $this->transaction->description)
-                    ->action('Voir l\'Historique', url('/historic'))*750
-                    ->line('Merci d\'utiliser notre application!');
+            return (new MailMessage)
+                        ->subject('Confirmation de Transfert d\'Argent')
+                        ->greeting('Bonjour ' . $this->expediteur->name . '!')
+                        ->line('Vous avez envoyé ' . $this->transaction->montant_transfere . ' à ' . $this->recepteur->name . ' le ' . $this->transaction->created_at->format('d/m/Y à H:i:s') . '.')
+                        ->line('Description : ' . ($this->transaction->description . 'Aucune description fournie.'))
+                        ->line('Cette notification sert de preuve de la transaction.')
+                        ->action('Voir l\'Historique', url('/historique'))
+                        ->line('Merci d\'utiliser notre application!');
+
     }
 
     /**
@@ -58,11 +60,10 @@ class TransactionEnvoie extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
-            // 'transaction'=>$this->transaction,
-            'montant'=>$this->transaction->montant_transfere,
-            'recepteur'=>$this->recepteur->name,
-
+            'transaction_id' => $this->transaction->id,
+            'montant' => $this->transaction->montant_transfere,
+            'destinataire' => $this->recepteur->name,
+            'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
         ];
     }
 }

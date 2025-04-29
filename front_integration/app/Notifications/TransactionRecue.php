@@ -40,12 +40,13 @@ class TransactionRecue extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable){
         return (new MailMessage)
-                    ->subject("Reception d'argent")
-                    ->greeting('Bonjour'. $this->recepteur->name. $this->recepteur->prenom . "!")
-                    ->line('Vous avez reçu de '. $this->expediteur->name .$this->expediteur->prenom .'la somme de'. $this->transaction->montant_transfere)
-                    ->line('Description:'. $this->transaction->description)
-                    ->action('Voir l\'Historique', url('/historic'))
-                    ->line('Merci d\'utiliser notre application!');
+        ->subject('Vous avez reçu de l\'argent!')
+        ->greeting('Bonjour ' . $this->recepteur->name . '!')
+        ->line('Vous avez reçu ' . $this->transaction->montant_transfere . ' de la part de ' . $this->expediteur->name . ' le ' . $this->transaction->created_at->format('d/m/Y à H:i:s') . '.')
+        ->line('Description : ' . ($this->transaction->description . 'Aucune description fournie.'))
+        ->line('Cette notification sert de preuve de la transaction.')
+        ->action('Voir l\'Historique', url('/historique'))
+        ->line('Merci d\'utiliser notre application!');
     }
 
     /**
@@ -55,9 +56,10 @@ class TransactionRecue extends Notification implements ShouldQueue
      */
     public function toArray($notifiable){
         return [
-            'transaction' => $this->transaction->id,
+            'transaction_id' => $this->transaction->id,
             'montant' => $this->transaction->montant_transfere,
             'expediteur' => $this->expediteur->name,
+            'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
         ];
     }
 }

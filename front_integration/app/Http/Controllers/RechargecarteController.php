@@ -59,7 +59,7 @@ class RechargecarteController extends Controller
             return redirect()->route('login')->withErrors(['message' => 'Vous devez être connecté pour recharger votre compte.']);
         }
     }
-    
+
 
     /**
      * Display the specified resource.

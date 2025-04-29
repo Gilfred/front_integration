@@ -4,15 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\User;
-use App\Notifications\TransactionEnvoie;
-use App\Notifications\TransactionRecue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
-
-// use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -94,7 +89,6 @@ class TransactionController extends Controller
             $transaction->save();
 
             DB::commit();
-
             return redirect()->route('fiche_information');
         } catch (\Exception $e) {
             // dd();
@@ -103,30 +97,6 @@ class TransactionController extends Controller
             return redirect()->back()->withErrors(['message' => "Une erreur s'est produite lors du transfert. Veuillez réessayer."]);
         }
 
-        if ($transfertReussi) {
-            // Récupérer les informations nécessaires pour la notification
-            $expediteur = auth()->user(); // L'expéditeur est l'utilisateur connecté
-            $recepteur = User::findOrFail($request->input('recepteur_id')); // Assure-toi d'avoir l'ID du récepteur dans la requête
-            $transaction = new Transaction([
-                'expediteur_id' => $expediteur->id,
-                'recepteur_id' => $recepteur->id,
-                'montant_transfere' => $request->input('montant'),
-                'description' => $request->input('description'),
-                'status' => 'validated', // Ou le statut approprié
-            ]);
-            $transaction->save();
-
-            // Envoyer les notifications par e-mail (via Mailtrap en développement)
-            Notification::send($expediteur, new TransactionEnvoie($transaction, $expediteur, $recepteur));
-            Notification::send($recepteur, new TransactionRecue($transaction, $expediteur, $recepteur));
-
-            // Afficher un message de succès à l'utilisateur dans l'interface web
-            session()->flash('success', 'L\'argent a été envoyé avec succès ! Vous et le destinataire recevrez une confirmation par e-mail.');
-            return redirect('/historique'); // Redirige vers la page d'historique ou une autre page appropriée
-        } else {
-            session()->flash('error', 'Une erreur s\'est produite lors de l\'envoi.');
-            return back()->withInput();
-        }
     }
 
     /**
