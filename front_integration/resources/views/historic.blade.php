@@ -5,7 +5,17 @@
 
 @section('content')
     @include('components.banner')
-    
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
     {{-- le solde du compte qui est afficher est dans la vue components.section1 --}}
 
     @include('components.section1')
