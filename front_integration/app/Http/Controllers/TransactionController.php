@@ -21,6 +21,11 @@ class TransactionController extends Controller
         return view('les_formulaires.form_recharge');
     }
 
+    public function notif_affich(){
+        $user_notification_connect=auth()->user();
+        return view('notif');
+    }
+
 
     /**
      * Show the form for creating a new resource.

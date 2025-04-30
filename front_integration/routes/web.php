@@ -14,6 +14,7 @@ Route::post('/recharge_de_carte',[RechargecarteController::class,'recharge_proce
 Route::get('/transfere_argent',[RechargecarteController::class,'index'])->middleware(['auth','verified'])->name('transfere.argent');
 Route::post('/transfere_argents',[TransactionController::class,'store'])->middleware(['auth','verified'])->name('envoie.argent.a.un.user');
 Route::get('/info_perso',[TransactionController::class,'historic'])->middleware(['auth','verified'])->name('fiche_information');
+Route::get('/notification',[TransactionController::class,'notif_affich'])->middleware(['auth','verified'])->name('les.notifications');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

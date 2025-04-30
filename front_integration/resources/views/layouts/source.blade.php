@@ -32,7 +32,7 @@
             <li class="nav-item"><a href="{{route('transfere.argent')}}" class="nav-link">Envoyer de l'argent à ami</a></li>
             <li class="nav-item"><a href="{{route('fiche_information')}}" class="nav-link">Wallet</a></li>
             <li class="nav-item"><a href="{{route('recharge.carte')}}" class="nav-link">Recharger mon compte</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Activity</a></li>
+            <li class="nav-item"><a href="{{route('les.notifications')}}" class="nav-link">Notifications</a></li>
             <li class="nav-item">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
@@ -44,7 +44,7 @@
                         <div >{{ Auth::user()->name }} {{ Auth::user()->prenom}}</div>
                         <div >{{ Auth::user()->email }}</div>
                     </div>
-                    
+
                 </div>
             </li>
 
@@ -57,16 +57,16 @@
                     {{ __('Log Out') }}
                 </x-responsive-nav-link>
             </form>
-            
+
         </ul>
-        
+
     </nav>
     <div>
         @if (Route::has('login'))
             <nav class="-mx-3 flex flex-1 justify-end">
                 @auth
                     <a href="{{ url('/dashboard') }}">
-                        
+
                         Dashboard
                     </a>
                 @else
