@@ -96,8 +96,10 @@ class TransactionController extends Controller
             DB::commit();
             return redirect()->route('fiche_information');
         } catch (\Exception $e) {
+            // dd();
             DB::rollBack();
-            dd('Erreur :', $e->getMessage());
+            Log::error('Erreur lors du transfert : ' . $e->getMessage());
+            return redirect()->back()->withErrors(['message' => "Une erreur s'est produite lors du transfert. Veuillez réessayer."]);
         }
 
     }
