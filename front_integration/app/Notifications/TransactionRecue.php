@@ -13,17 +13,17 @@ class TransactionRecue extends Notification implements ShouldQueue
 {
     use Queueable;
     protected $transaction;
-    protected $expediteur;
-    protected $recepteur;
+    // protected $expediteur;
+    // protected $recepteur;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Transaction $transaction, User $expediteur, User  $recepteur){
+    public function __construct( $transaction){
         //
         $this->transaction= $transaction;
-        $this->expediteur= $expediteur;
-        $this->recepteur=$recepteur;
+        // $this->expediteur= $expediteur;
+        // $this->recepteur=$recepteur;
     }
 
     /**
@@ -32,7 +32,7 @@ class TransactionRecue extends Notification implements ShouldQueue
      * @return array<int, string>
      */
     public function via(object $notifiable){
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -40,13 +40,20 @@ class TransactionRecue extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable){
         return (new MailMessage)
-        ->subject('Vous avez reçu de l\'argent!')
-        ->greeting('Bonjour ' . $this->recepteur->name . '!')
-        ->line('Vous avez reçu ' . $this->transaction->montant_transfere . ' de la part de ' . $this->expediteur->name . ' le ' . $this->transaction->created_at->format('d/m/Y à H:i:s') . '.')
-        ->line('Description : ' . ($this->transaction->description . 'Aucune description fournie.'))
-        ->line('Cette notification sert de preuve de la transaction.')
-        ->action('Voir l\'Historique', url('/historique'))
-        ->line('Merci d\'utiliser notre application!');
+        ->line('Votre avez reçu un montant.')
+        ->line('Montant:'. $this->transaction->montant_transfere . 'FCFA')
+        ->line('description:'. $this->transaction->description)
+        ->line('Expediteur'. $this->transaction->expediteur->name)
+        ->line('Merci d\'utiliser notre application.');
+    }
+
+    public function toDatabase($notification){
+        return [
+            'type'=>"reception",
+            'montant'=>$this->transaction->montant_transfere,
+            'description'=>$this->transaction->description,
+            'recepteur'=>$this->transaction->expediteur->name,
+        ];
     }
 
     /**
@@ -56,10 +63,10 @@ class TransactionRecue extends Notification implements ShouldQueue
      */
     public function toArray($notifiable){
         return [
-            'transaction_id' => $this->transaction->id,
-            'montant' => $this->transaction->montant_transfere,
-            'expediteur' => $this->expediteur->name,
-            'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
+            // 'transaction_id' => $this->transaction->id,
+            // 'montant' => $this->transaction->montant_transfere,
+            // 'expediteur' => $this->expediteur->name,
+            // 'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
         ];
     }
 }

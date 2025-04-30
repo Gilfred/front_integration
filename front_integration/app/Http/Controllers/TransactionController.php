@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\User;
+use App\Notifications\TransactionEnvoie;
+use App\Notifications\TransactionRecue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -88,13 +90,14 @@ class TransactionController extends Controller
             $transaction->status = 'validated';
             $transaction->save();
 
+            $expediteur->notify(new TransactionEnvoie($transaction));
+            $destinataire->notify(new TransactionRecue($transaction));
+
             DB::commit();
             return redirect()->route('fiche_information');
         } catch (\Exception $e) {
-            // dd();
             DB::rollBack();
-            Log::error('Erreur lors du transfert : ' . $e->getMessage());
-            return redirect()->back()->withErrors(['message' => "Une erreur s'est produite lors du transfert. Veuillez réessayer."]);
+            dd('Erreur :', $e->getMessage());
         }
 
     }

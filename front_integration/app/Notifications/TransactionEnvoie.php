@@ -2,10 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+// use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,18 +11,18 @@ class TransactionEnvoie extends Notification
 {
     use Queueable;
     protected $transaction;
-    protected $expediteur;
-    protected $recepteur;
+    // protected $expediteur;
+    // protected $recepteur;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Transaction $transaction, User $expediteur, User $recepteur)
+    public function __construct($transaction)
     {
         //
         $this -> transaction = $transaction;
-        $this -> expediteur = $expediteur;
-        $this -> recepteur = $recepteur;
+        // $this -> expediteur = $expediteur;
+        // $this -> recepteur = $recepteur;
     }
 
     /**
@@ -32,24 +30,31 @@ class TransactionEnvoie extends Notification
      *
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
+    public function via(object $notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable){
-            return (new MailMessage)
-                        ->subject('Confirmation de Transfert d\'Argent')
-                        ->greeting('Bonjour ' . $this->expediteur->name . '!')
-                        ->line('Vous avez envoyé ' . $this->transaction->montant_transfere . ' à ' . $this->recepteur->name . ' le ' . $this->transaction->created_at->format('d/m/Y à H:i:s') . '.')
-                        ->line('Description : ' . ($this->transaction->description . 'Aucune description fournie.'))
-                        ->line('Cette notification sert de preuve de la transaction.')
-                        ->action('Voir l\'Historique', url('/historique'))
-                        ->line('Merci d\'utiliser notre application!');
+        return (new MailMessage)
+        ->line('Votre transaction a été envoyée avec succès.')
+        ->line('Montant: ' . $this->transaction->montant_transfere . ' FCFA')
+        ->line('Destinataire: ' . $this->transaction->recepteur->name)
+        ->line('description:'. $this->transaction->description)
+        ->line('Merci d\'utiliser notre application.');
 
+    }
+
+    public function toDatabase($notification){
+        return[
+            'type' => 'envoi',
+            'montant' => $this->transaction->montant_transfere,
+            'recepteur' => $this->transaction->recepteur->name,
+            'description' => $this->transaction->description,
+        ];
     }
 
     /**
@@ -60,10 +65,10 @@ class TransactionEnvoie extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'transaction_id' => $this->transaction->id,
-            'montant' => $this->transaction->montant_transfere,
-            'destinataire' => $this->recepteur->name,
-            'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
+            // 'transaction_id' => $this->transaction->id,
+            // 'montant' => $this->transaction->montant_transfere,
+            // 'destinataire' => $this->recepteur->name,
+            // 'date' => $this->transaction->created_at->format('d/m/Y H:i:s'),
         ];
     }
 }
