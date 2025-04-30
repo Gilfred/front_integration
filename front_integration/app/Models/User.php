@@ -21,7 +21,6 @@ class User extends Authenticatable
         'call_number',
         'email',
         'password',
-        'call_number',
         'balence',
     ];
 
@@ -32,7 +31,7 @@ class User extends Authenticatable
     public function receivedTransactions()
     {
         return $this->hasMany(Transaction::class, 'recepteur_id');
-    } 
+    }
 
 
     /**
