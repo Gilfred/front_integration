@@ -92,6 +92,11 @@
 
         <footer style="background-color: #f0f0f0; padding: 10px; text-align: center;">
             <p>&copy; {{ date('Y') }} Mon Application. Tous droits réservés.</p>
+            <ul style="list-style: none; padding: 0; justify-content: center; gap: 20px;">
+            <li><a href="mentions-legales">Mentions légales</a></li>
+            <li><a href="contact">Contact</a></li>
+            <li><a href="politique-de-confidentialite">Confidentialité</a></li>
+        </ul>
         </footer>
 
 </body>

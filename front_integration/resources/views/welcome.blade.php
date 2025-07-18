@@ -8,7 +8,7 @@
     <title>Gestion of wallet</title>
 </head>
 <body>
-    
+
 <div class="banner1">
     <div class="left">
         <div class="summary">
@@ -32,18 +32,18 @@
                 <nav class="-mx-3 flex flex-1 justify-end">
                     @auth
                         <a href="{{ url('/dashboard') }}">
-                            
+
                             Dashboard
                         </a>
                     @else
                         <a href="{{ route('login') }}">
                             Log in
                         </a>
-    
+
                         @if (Route::has('register'))
-    
+
                             <a href="{{ route('register') }}">
-    
+
                                 Register
                             </a>
                         @endif
@@ -73,7 +73,7 @@
     <div>
         <h5>Solde</h5>
         <div class="first_nomber">$15000.17</div>
-        
+
     </div>
     </div>
     </div>
@@ -133,7 +133,7 @@
     </tr>
     </thead>
     <tbody>
-        
+
         <tr>
             <td>
                 <form action="">
@@ -159,7 +159,7 @@
             <td>Graphic Designer</td>
             <td>$1251</td>
         </tr>
-        
+
         <tr>
             <td>
                 <form action="">
@@ -239,9 +239,14 @@
 </table>
 
     <footer style="background-color: #f0f0f0; padding: 10px; text-align: center;">
-        <p>&copy; {{ date('Y') }} Mon Application. Tous droits réservés.</p>
+        <p>&copy; {{ date('M Y') }}. Mon Application. Tous droits réservés.</p>
+        <ul style="list-style: none; padding: 0; justify-content: center; gap: 20px;">
+            <li><a href="politic_confident/mentions-legales">Mentions légales</a></li>
+            <li><a href="politic_confident/contact">Contact</a></li>
+            <li><a href="politic_confident/politique-de-confidentialite">Confidentialité</a></li>
+        </ul>
     </footer>
 
-   
+
 </body>
 </html>

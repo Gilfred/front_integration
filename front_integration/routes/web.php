@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PoliticconfidentialiteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RechargecarteController;
 use App\Http\Controllers\TransactionController;
@@ -8,6 +9,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+// politique de confidentialité
+Route::get('/mentions-legales', [PoliticconfidentialiteController::class,'mention_legale'])->name('politic_confident.mentions-legales');
+Route::get('/contact',[PoliticconfidentialiteController::class,'contact'])->name('politic.contact');
+Route::get('/politique-de-confidentialite', [PoliticconfidentialiteController::class,'politique_de_confidentialite'])->name('politic_confident.politique-de-confidentialite');
 
 Route::get('/recharge_carte',[TransactionController::class,'index'])->middleware(['auth','verified'])->name('recharge.carte');
 Route::post('/recharge_de_carte',[RechargecarteController::class,'recharge_process'])->middleware(['auth','verified'])->name('recharger.carte.perso');
