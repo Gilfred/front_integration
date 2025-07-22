@@ -241,8 +241,8 @@
     <footer style="background-color: #f0f0f0; padding: 10px; text-align: center;">
         <p>&copy; {{ date('M Y') }}. Mon Application. Tous droits réservés.</p>
         <ul style="list-style: none; padding: 0; justify-content: center; gap: 20px;">
-            <li><a href="politic_confident/mentions-legales">Mentions légales</a></li>
-            <li><a href="politic_confident/contact">Contact</a></li>
+            <li><a href="mentions-legales">Mentions légales</a></li>
+            <li><a href="contact">Contact</a></li>
             <li><a href="politic_confident/politique-de-confidentialite">Confidentialité</a></li>
         </ul>
     </footer>
