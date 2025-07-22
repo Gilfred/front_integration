@@ -15,7 +15,10 @@ Route::get('mentions-legales', [PoliticconfidentialiteController::class,'mention
 Route::get('contact',[PoliticconfidentialiteController::class,'contact'])->name('politic.contact');
 Route::get('politique-de-confidentialite', [PoliticconfidentialiteController::class,'politique_de_confidentialite'])->name('politic_confident.politique-de-confidentialite');
 
-// Route::get('politic_confident/mentions-legales')
+//politique de confidentialité pour la page d'accueil
+Route::get('mentions-legales', [PoliticconfidentialiteController::class,'mention_legale_welcome'])->name('politic_confident.mentions-legales.welcome');
+Route::get('contact', [PoliticconfidentialiteController::class,'contact_welcome'])->name('politic.contact.welcome');
+Route::get('confidentialite', [PoliticconfidentialiteController::class,'politique_de_confidentialite_welcome'])->name('politic_confident.politique-de-confidentialite.welcome');
 
 Route::get('/recharge_carte',[TransactionController::class,'index'])->middleware(['auth','verified'])->name('recharge.carte');
 Route::post('/recharge_de_carte',[RechargecarteController::class,'recharge_process'])->middleware(['auth','verified'])->name('recharger.carte.perso');

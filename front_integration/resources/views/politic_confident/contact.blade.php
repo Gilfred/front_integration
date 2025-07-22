@@ -8,4 +8,5 @@
         <p>
             Email : <a href="mailto:gilfredmawulomdgb@gmail.com">Nous ecrire</a>
         </p>
+    </div>
 @endsection

@@ -243,7 +243,7 @@
         <ul style="list-style: none; padding: 0; justify-content: center; gap: 20px;">
             <li><a href="mentions-legales">Mentions légales</a></li>
             <li><a href="contact">Contact</a></li>
-            <li><a href="politic_confident/politique-de-confidentialite">Confidentialité</a></li>
+            <li><a href="confidentialite">Confidentialité</a></li>
         </ul>
     </footer>
 

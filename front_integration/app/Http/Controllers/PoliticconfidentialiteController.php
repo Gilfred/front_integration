@@ -21,4 +21,19 @@ class PoliticconfidentialiteController extends Controller
     {
         return view('politic_confident.politique-de-confidentialite');
     }
+
+    public function mention_legale_welcome()
+    {
+        return view('politique_accueil.mentions-legales');
+    }
+
+    public function contact_welcome()
+    {
+        return view('politique_accueil.contact');
+    }
+
+    public function politique_de_confidentialite_welcome()
+    {
+        return view('politique_accueil.politique-de-confidentialite');
+    }
 }
