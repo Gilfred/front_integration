@@ -1,6 +1,6 @@
 @extends('layouts.source')
 
-@section('title','Notre appli de gestion')
+@section('title','gestion of wallet')
 
 @section('content')
     @include('components.banner')
